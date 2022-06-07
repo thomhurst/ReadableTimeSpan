@@ -171,6 +171,46 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
     {
         return left.InnerTimeSpan > right.InnerTimeSpan;
     }
+    
+    public static bool operator ==(TimeSpan left, ReadableTimeSpan right)
+    {
+        return left.Equals(right.InnerTimeSpan);
+    }
+
+    public static bool operator !=(TimeSpan left, ReadableTimeSpan right)
+    {
+        return !(left == right.InnerTimeSpan);
+    }
+
+    public static bool operator <(TimeSpan left, ReadableTimeSpan right)
+    {
+        return left < right.InnerTimeSpan;
+    }
+
+    public static bool operator >(TimeSpan left, ReadableTimeSpan right)
+    {
+        return left > right.InnerTimeSpan;
+    }
+    
+    public static bool operator ==(ReadableTimeSpan left, TimeSpan right)
+    {
+        return left.InnerTimeSpan.Equals(right);
+    }
+
+    public static bool operator !=(ReadableTimeSpan left, TimeSpan right)
+    {
+        return !(left.InnerTimeSpan == right);
+    }
+
+    public static bool operator <(ReadableTimeSpan left, TimeSpan right)
+    {
+        return left.InnerTimeSpan < right;
+    }
+
+    public static bool operator >(ReadableTimeSpan left, TimeSpan right)
+    {
+        return left.InnerTimeSpan > right;
+    }
 
     private static (double amount, ReadableTimeSpanUnit unit) ExtractUnitAndAmount(string stringTimespan)
     {
