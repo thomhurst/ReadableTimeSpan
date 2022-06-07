@@ -11,7 +11,7 @@ Does that mean 1 hour? 1 minute? 1 second?
 Even if you know, it can be very easy to accidentally set the wrong value.
 So this let's you write TimeSpans in human readable language, and it'll do the conversion for you!
 
-So I can instead write: `1 second`
+So I can instead write: `1 second` or `1s`
 
 ### How can I write them?
 The syntax is: `{number}{optional space}{unit}`
