@@ -8,6 +8,7 @@ public class Tests
     [TestCase(":")]
     [TestCase("/")]
     [TestCase("-")]
+    [TestCase("and")]
     public void SeparatorsAreValid(string separator)
     {
         var timeSpan = new ReadableTimeSpan($"5 days {separator} 4 hours {separator} 3 minutes {separator} 2 seconds {separator} 1 millisecond");
@@ -174,5 +175,17 @@ public class Tests
         
         Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(5));
         Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(500));
+    }
+    
+    [Test]
+    public void CanParseSurroundingSpaces()
+    {
+        var timeSpan = new ReadableTimeSpan("   5  days   and 4hr |     3m  |   2s     and   324ms   ");
+        
+        Assert.That(timeSpan.InnerTimeSpan.Days, Is.EqualTo(5));
+        Assert.That(timeSpan.InnerTimeSpan.Hours, Is.EqualTo(4));
+        Assert.That(timeSpan.InnerTimeSpan.Minutes, Is.EqualTo(3));
+        Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(2));
+        Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(324));
     }
 }

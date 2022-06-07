@@ -10,7 +10,7 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
 {
     public TimeSpan InnerTimeSpan { get; }
     
-    private static readonly char[] ValidSeparators = { ':', '|', '/', '-' };
+    private static readonly string[] ValidSeparators = { ":", "|", "/", "-", "and" };
     private static readonly Regex AlphaAndNumberRegex = new(@"(\d+\.?\d*)\s*([a-zA-Z]+)");
 
     public static implicit operator TimeSpan(ReadableTimeSpan readableTimeSpan) => readableTimeSpan.InnerTimeSpan;
@@ -30,7 +30,7 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
         
         InnerTimeSpan = TimeSpan.Zero;
 
-        foreach (var segment in stringTimespan.Split(ValidSeparators))
+        foreach (var segment in stringTimespan.ToLower().Split(ValidSeparators, StringSplitOptions.RemoveEmptyEntries))
         {
             var (amount, unit) = ExtractUnitAndAmount(segment);
             InnerTimeSpan += ReadableTimeSpanUnitMapper.Map(unit).Invoke(amount);
