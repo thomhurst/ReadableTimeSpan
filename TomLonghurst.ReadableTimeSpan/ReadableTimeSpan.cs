@@ -14,6 +14,7 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
     private static readonly Regex AlphaAndNumberRegex = new(@"(\d+\.?\d*)\s*([a-zA-Z]+)");
 
     public static implicit operator TimeSpan(ReadableTimeSpan readableTimeSpan) => readableTimeSpan.InnerTimeSpan;
+    public static implicit operator ReadableTimeSpan(TimeSpan timeSpan) => new ReadableTimeSpan(timeSpan);
 
     public ReadableTimeSpan(string stringTimespan)
     {
@@ -35,6 +36,11 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
             var (amount, unit) = ExtractUnitAndAmount(segment);
             InnerTimeSpan += ReadableTimeSpanUnitMapper.Map(unit).Invoke(amount);
         }
+    }
+
+    public ReadableTimeSpan(TimeSpan timeSpan)
+    {
+        InnerTimeSpan = timeSpan;
     }
 
     public static ReadableTimeSpan Parse(string stringTimespan)
