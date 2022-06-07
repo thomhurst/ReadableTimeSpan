@@ -37,6 +37,24 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
         }
     }
 
+    public ReadableTimeSpan Parse(string stringTimespan)
+    {
+        return new ReadableTimeSpan(stringTimespan);
+    }
+
+    public bool TryParse(string stringTimespan, out ReadableTimeSpan readableTimeSpan)
+    {
+        try
+        {
+            readableTimeSpan = new ReadableTimeSpan(stringTimespan);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    
     public int CompareTo(object? obj)
     {
         if (obj is not ReadableTimeSpan readableTimeSpan)
