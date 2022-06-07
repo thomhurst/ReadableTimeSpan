@@ -1,6 +1,6 @@
 namespace TomLonghurst.ReadableTimeSpan.Enums;
 
-public enum ReadableTimeSpanUnit
+internal enum ReadableTimeSpanUnit
 {
     T,
     Tick,

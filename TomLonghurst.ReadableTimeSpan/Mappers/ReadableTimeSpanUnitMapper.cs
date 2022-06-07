@@ -2,9 +2,9 @@ using TomLonghurst.ReadableTimeSpan.Enums;
 
 namespace TomLonghurst.ReadableTimeSpan.Mappers;
 
-public static class ReadableTimeSpanUnitMapper
+internal static class ReadableTimeSpanUnitMapper
 {
-    public static Func<double, TimeSpan> Map(ReadableTimeSpanUnit readableTimeSpanUnit)
+    internal static Func<double, TimeSpan> Map(ReadableTimeSpanUnit readableTimeSpanUnit)
     {
         switch (readableTimeSpanUnit)
         {
