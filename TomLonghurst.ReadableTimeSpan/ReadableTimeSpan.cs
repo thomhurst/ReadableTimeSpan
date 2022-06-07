@@ -143,11 +143,11 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
 
         var stringUnit = regexResult.Groups[2].Value;
         
-        if (!Enum.TryParse(typeof(ReadableTimeSpanUnit), stringUnit, true, out var readableTimeSpanUnit))
+        if (!Enum.TryParse(stringUnit, true, out ReadableTimeSpanUnit readableTimeSpanUnit))
         {
             throw new ArgumentException($"{stringUnit} is not a valid TimeSpan unit", nameof(ReadableTimeSpanUnit));
         }
         
-        return (double.Parse(regexResult.Groups[1].Value), (ReadableTimeSpanUnit) readableTimeSpanUnit);
+        return (double.Parse(regexResult.Groups[1].Value), readableTimeSpanUnit);
     }
 }
