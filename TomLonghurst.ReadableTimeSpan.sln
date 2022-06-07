@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ReadableTimeSpan", "TomLonghurst.ReadableTimeSpan\TomLonghurst.ReadableTimeSpan.csproj", "{4FCBA1C4-C7EC-4634-B6A1-0B90A8103409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ReadableTimeSpan.UnitTests", "TomLonghurst.ReadableTimeSpan.UnitTests\TomLonghurst.ReadableTimeSpan.UnitTests.csproj", "{58B21910-A524-47A3-AA49-49E9CADD8D41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FCBA1C4-C7EC-4634-B6A1-0B90A8103409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCBA1C4-C7EC-4634-B6A1-0B90A8103409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCBA1C4-C7EC-4634-B6A1-0B90A8103409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCBA1C4-C7EC-4634-B6A1-0B90A8103409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58B21910-A524-47A3-AA49-49E9CADD8D41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B21910-A524-47A3-AA49-49E9CADD8D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B21910-A524-47A3-AA49-49E9CADD8D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B21910-A524-47A3-AA49-49E9CADD8D41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
