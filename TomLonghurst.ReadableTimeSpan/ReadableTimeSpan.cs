@@ -212,6 +212,19 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
         return left.InnerTimeSpan > right;
     }
 
+    public int Days => InnerTimeSpan.Days;
+    public int Hours => InnerTimeSpan.Hours;
+    public int Minutes => InnerTimeSpan.Minutes;
+    public int Seconds => InnerTimeSpan.Seconds;
+    public int Milliseconds => InnerTimeSpan.Milliseconds;
+    public long Ticks => InnerTimeSpan.Ticks;
+
+    public double TotalDays => InnerTimeSpan.TotalDays;
+    public double TotalHours => InnerTimeSpan.TotalHours;
+    public double TotalMinutes => InnerTimeSpan.TotalMinutes;
+    public double TotalSeconds => InnerTimeSpan.TotalSeconds;
+    public double TotalMilliseconds => InnerTimeSpan.TotalMilliseconds;
+
     private static (double amount, ReadableTimeSpanUnit unit) ExtractUnitAndAmount(string stringTimespan)
     {
         var regexResult = AlphaAndNumberRegex.Match(stringTimespan);
