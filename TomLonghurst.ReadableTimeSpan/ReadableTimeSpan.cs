@@ -37,12 +37,12 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
         }
     }
 
-    public ReadableTimeSpan Parse(string stringTimespan)
+    public static ReadableTimeSpan Parse(string stringTimespan)
     {
         return new ReadableTimeSpan(stringTimespan);
     }
 
-    public bool TryParse(string stringTimespan, out ReadableTimeSpan readableTimeSpan)
+    public static bool TryParse(string stringTimespan, out ReadableTimeSpan readableTimeSpan)
     {
         try
         {
