@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace TomLonghurst.ReadableTimeSpan;
 
-public class ReadableTimeSpanInitialiser
+internal static class ReadableTimeSpanInitialiser
 {
     [ModuleInitializer]
     public static void Initialise()

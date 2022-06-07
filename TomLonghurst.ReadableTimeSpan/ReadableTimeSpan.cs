@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using TomLonghurst.ReadableTimeSpan.Enums;
 using TomLonghurst.ReadableTimeSpan.Extensions;
@@ -37,7 +38,7 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
         
         InnerTimeSpan = TimeSpan.Zero;
 
-        foreach (var segment in stringTimespan.ToLower().Split(ValidSeparators, StringSplitOptions.RemoveEmptyEntries))
+        foreach (var segment in stringTimespan.ToLower(CultureInfo.InvariantCulture).Split(ValidSeparators, StringSplitOptions.RemoveEmptyEntries))
         {
             var (amount, unit) = ExtractUnitAndAmount(segment);
             InnerTimeSpan += ReadableTimeSpanUnitMapper.Map(unit).Invoke(amount);
