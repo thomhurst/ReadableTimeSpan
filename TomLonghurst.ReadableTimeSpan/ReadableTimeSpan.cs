@@ -149,7 +149,17 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
     {
         return !(left == right);
     }
-    
+
+    public static bool operator <(ReadableTimeSpan left, ReadableTimeSpan right)
+    {
+        return left.InnerTimeSpan < right.InnerTimeSpan;
+    }
+
+    public static bool operator >(ReadableTimeSpan left, ReadableTimeSpan right)
+    {
+        return left.InnerTimeSpan > right.InnerTimeSpan;
+    }
+
     private static (double amount, ReadableTimeSpanUnit unit) ExtractUnitAndAmount(string stringTimespan)
     {
         var regexResult = AlphaAndNumberRegex.Match(stringTimespan);
