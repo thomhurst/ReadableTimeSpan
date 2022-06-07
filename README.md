@@ -5,13 +5,13 @@ A TimeSpan that can be defined as a string in configuration files, and easy to r
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/976b0c6b323b43ef94334f503af9b737)](https://www.codacy.com/app/thomhurst/ReadableTimeSpan?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=thomhurst/ReadableTimeSpan&amp;utm_campaign=Badge_Grade)
 
 ### Why?
-Sometimes we want to define TimeSpans in our appsettings.json (or other configuration) files - And that requires stringified TimeSpans.
+Sometimes we want to define `TimeSpan`s in our `appsettings.json` (or other configuration) files - And that requires stringified TimeSpans.
 The problem is, they look something like this: `00:01:00`
 Does that mean 1 hour? 1 minute? 1 second?
 Even if you know, it can be very easy to accidentally set the wrong value.
-So this let's you write TimeSpans in human readable language, and it'll do the conversion for you!
+So this let's you write `TimeSpan`s in human readable language, and it'll do the conversion for you!
 
-So I can instead write: `1 second` or `1s`
+So I can instead write: `1 minute or `1m`
 
 ### How can I write them?
 The syntax is: `{number}{optional space}{unit}`
@@ -61,14 +61,14 @@ The units can be:
     Days
 ```
 
-So a perfectly valid TimeSpan could look like:
+So a perfectly valid `TimeSpan` could look like:
 `166 days | 13 hrs | 42 min | 29 seconds and 324ms`
 
 ### What else do I need to do?
 In your settings classes, simply change the type from `TimeSpan` to `ReadableTimeSpan`. That's it.
-ReadableTimeSpan works with `IConfiguration` and Binding. So if you use Microsoft `ConfigurationBuilder` or `IOptions`, the conversion from `appsettings.json` to Application Code happens automatically.
+`ReadableTimeSpan` works with `IConfiguration` and Binding. So if you use Microsoft `ConfigurationBuilder` or `IOptions`, the conversion from `appsettings.json` to Application Code happens automatically.
 
-ReadableTimeSpan can also be implicitly converted into a regular `TimeSpan`. So if you have a method that accepts a `TimeSpan`, you can just go ahead and pass in a `ReadableTimeSpan`
+`ReadableTimeSpan` can also be implicitly converted into a regular `TimeSpan`. So if you have a method that accepts a `TimeSpan`, you can just go ahead and pass in a `ReadableTimeSpan`
 
 You can use operators such as `>` `<` `==` with other `ReadableTimeSpan` or even with regular `TimeSpan`
 
