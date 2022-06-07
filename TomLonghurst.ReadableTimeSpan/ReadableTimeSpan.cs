@@ -28,6 +28,12 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
             InnerTimeSpan = timeSpan;
             return;
         }
+
+        if (stringTimespan.Trim() == "0")
+        {
+            InnerTimeSpan = TimeSpan.Zero;
+            return;
+        }
         
         InnerTimeSpan = TimeSpan.Zero;
 

@@ -188,4 +188,20 @@ public class Tests
         Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(2));
         Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(324));
     }
+    
+    [Test]
+    public void CanParse_Zero()
+    {
+        var timeSpan = new ReadableTimeSpan("0");
+
+        Assert.That(timeSpan.InnerTimeSpan.TotalMilliseconds, Is.EqualTo(0));
+    }
+    
+    [Test]
+    public void CanParse_ZeroSeconds()
+    {
+        var timeSpan = new ReadableTimeSpan("0 seconds");
+
+        Assert.That(timeSpan.InnerTimeSpan.TotalMilliseconds, Is.EqualTo(0));
+    }
 }
