@@ -63,6 +63,8 @@ The units can be:
 
 So a perfectly valid `TimeSpan` could look like:
 `166 days | 13 hrs | 42 min | 29 seconds and 324ms`
+or
+`166d + 13h + 42m + 29s + 324ms`
 
 ### What else do I need to do?
 `ReadableTimeSpan` works with `IConfiguration` and Binding. So if you use Microsoft `ConfigurationBuilder` or `IOptions`, the conversion from `appsettings.json` to Application Code happens automatically. All you need to do, is BEFORE you bind any config, call this static method:
