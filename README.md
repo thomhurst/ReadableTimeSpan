@@ -21,7 +21,7 @@ If you want to combine units, such as seconds and milliseconds, that's possible 
 That would be more like: `{number}{optional space}{unit} {separator} {number}{optional space}{unit}`
 
 Separators can be:
-`:` `|` `/` `-` `and`
+`:` `|` `+` `-` `and`
 
 The units can be:
 
