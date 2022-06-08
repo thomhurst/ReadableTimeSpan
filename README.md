@@ -65,12 +65,10 @@ So a perfectly valid `TimeSpan` could look like:
 `166 days | 13 hrs | 42 min | 29 seconds and 324ms`
 
 ### What else do I need to do?
-In your settings classes, simply change the type from `TimeSpan` to `ReadableTimeSpan`. That's it.
-`ReadableTimeSpan` works with `IConfiguration` and Binding. So if you use Microsoft `ConfigurationBuilder` or `IOptions`, the conversion from `appsettings.json` to Application Code happens automatically.
+`ReadableTimeSpan` works with `IConfiguration` and Binding. So if you use Microsoft `ConfigurationBuilder` or `IOptions`, the conversion from `appsettings.json` to Application Code happens automatically. All you need to do, is BEFORE you bind any config, call this static method:
+`ReadableTimeSpan.EnableConfigurationBinding();`
 
-`ReadableTimeSpan` can also be implicitly converted into a regular `TimeSpan`. So if you have a method that accepts a `TimeSpan`, you can just go ahead and pass in a `ReadableTimeSpan`
+If you want to use it outside of Configuration Binding, simply call `ReadableTimeSpan.Parse` or `ReadableTimeSpan.TryParse`
 
-You can use operators such as `>` `<` `==` with other `ReadableTimeSpan` or even with regular `TimeSpan`
-
-### ToString()
-`ToString()` will give you a string version of the TimeSpan, but with words instead of just numbers. 
+### ToReadableString()
+`ToReadableString()` will give you a string version of the TimeSpan, but with words instead of just numbers. 
