@@ -24,7 +24,11 @@ If you want to combine units, such as seconds and milliseconds, that's possible 
 That would be more like: `{number}{optional space}{unit} {separator} {number}{optional space}{unit}`
 
 Separators can be:
-`:` `|` `+` `-` `and`
+- `:` 
+- `|` 
+- `+` 
+- `-` 
+- `and`
 
 The units can be:
 
@@ -65,15 +69,16 @@ The units can be:
 ```
 
 So a perfectly valid `TimeSpan` could look like:
-`166 days | 13 hrs | 42 min | 29 seconds and 324ms`
-or
-`166d + 13h + 42m + 29s + 324ms`
+- `166 days | 13 hrs | 42 min | 29 seconds and 324ms`
+- `166d + 13h + 42m + 29s + 324ms`
 
 ### What else do I need to do?
 `ReadableTimeSpan` works with `IConfiguration` and Binding. So if you use Microsoft `ConfigurationBuilder` or `IOptions`, the conversion from `appsettings.json` to Application Code happens automatically. All you need to do, is BEFORE you bind any config, call this static method:
 `ReadableTimeSpan.EnableConfigurationBinding();`
 
-If you want to use it outside of Configuration Binding, simply call `ReadableTimeSpan.Parse` or `ReadableTimeSpan.TryParse`
+If you want to use it outside of Configuration Binding, simply call either:
+- `ReadableTimeSpan.Parse`
+- `ReadableTimeSpan.TryParse`
 
 ### ToReadableString()
 `ToReadableString()` will give you a string version of the TimeSpan, but with words instead of just numbers. 
