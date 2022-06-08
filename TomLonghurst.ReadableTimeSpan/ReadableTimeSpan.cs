@@ -10,7 +10,7 @@ namespace TomLonghurst.ReadableTimeSpan;
 
 public static class ReadableTimeSpan
 {
-    private static readonly string[] ValidSeparators = { ":", "|", "+", "-", "and" };
+    private static readonly string[] ValidSeparators = { ":", "+", "&", "|", "-", "and" };
     private static readonly Regex AlphaAndNumberRegex = new(@"(\d+\.?\d*)\s*([a-zA-Z]+)");
     private static bool _configurationBindingIsEnabled;
 
