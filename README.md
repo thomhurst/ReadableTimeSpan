@@ -29,8 +29,9 @@ That would be more like: `{number}{optional space}{unit} {separator} {number}{op
 
 Separators can be:
 - `:` 
-- `|` 
 - `+` 
+- `&`
+- `|` 
 - `-` 
 - `and`
 
