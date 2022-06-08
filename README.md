@@ -6,7 +6,9 @@ A TimeSpan that can be defined as a string in configuration files, and easy to r
 
 ### Why?
 Sometimes we want to define `TimeSpan`s in our `appsettings.json` (or other configuration) files - And that requires stringified TimeSpans.
-The problem is, they look something like this: `00:01:00`
+The problem is, they look something like this: 
+- `00:01:00`
+- `1.00:01:00.100`
 Does that mean 1 hour? 1 minute? 1 second?
 Even if you know, it can be very easy to accidentally set the wrong value.
 So this let's you write `TimeSpan`s in human readable language, and it'll do the conversion for you!
