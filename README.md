@@ -14,7 +14,11 @@ Does that mean 1 hour? 1 minute? 1 second?
 Even if you know, it can be very easy to accidentally set the wrong value.
 So this let's you write `TimeSpan`s in human readable language, and it'll do the conversion for you!
 
-So I can instead write: `1 minute` or `1m`
+So I can instead write like: 
+- `1 minute` 
+- `1m`
+- `1 day & 1 minute & 100 milliseconds`
+- `1d + 1m + 100ms`
 
 ### How can I write them?
 The syntax is: `{number}{optional space}{unit}`
