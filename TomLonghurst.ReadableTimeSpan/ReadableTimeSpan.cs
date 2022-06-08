@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using TomLonghurst.ReadableTimeSpan.Enums;
@@ -7,17 +8,42 @@ using TomLonghurst.ReadableTimeSpan.Mappers;
 
 namespace TomLonghurst.ReadableTimeSpan;
 
-public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeSpan>, IEquatable<ReadableTimeSpan>
+public static class ReadableTimeSpan
 {
-    public TimeSpan InnerTimeSpan { get; }
-    
     private static readonly string[] ValidSeparators = { ":", "|", "/", "-", "and" };
     private static readonly Regex AlphaAndNumberRegex = new(@"(\d+\.?\d*)\s*([a-zA-Z]+)");
+    private static bool _configurationBindingIsEnabled;
 
-    public static implicit operator TimeSpan(ReadableTimeSpan readableTimeSpan) => readableTimeSpan.InnerTimeSpan;
-    public static implicit operator ReadableTimeSpan(TimeSpan timeSpan) => new ReadableTimeSpan(timeSpan);
+    public static void EnableConfigurationBinding()
+    {
+        if (_configurationBindingIsEnabled)
+        {
+            return;
+        }
+        
+        _configurationBindingIsEnabled = true;
+        TypeDescriptor.AddAttributes(typeof(TimeSpan), new TypeConverterAttribute(typeof(ReadableTimeSpanConverter)));
+    }
 
-    public ReadableTimeSpan(string stringTimespan)
+    public static TimeSpan Parse(string stringTimespan)
+    {
+        return InternalParse(stringTimespan);
+    }
+
+    public static bool TryParse(string stringTimespan, out TimeSpan readableTimeSpan)
+    {
+        try
+        {
+            readableTimeSpan = InternalParse(stringTimespan);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static TimeSpan InternalParse(string stringTimespan)
     {
         if (string.IsNullOrWhiteSpace(stringTimespan))
         {
@@ -26,123 +52,70 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
         
         if (TimeSpan.TryParse(stringTimespan, out var timeSpan))
         {
-            InnerTimeSpan = timeSpan;
-            return;
+            return timeSpan;
         }
 
         if (stringTimespan.Trim() == "0")
         {
-            InnerTimeSpan = TimeSpan.Zero;
-            return;
+            return TimeSpan.Zero;
         }
         
-        InnerTimeSpan = TimeSpan.Zero;
+        timeSpan = TimeSpan.Zero;
 
         foreach (var segment in stringTimespan.ToLower(CultureInfo.InvariantCulture).Split(ValidSeparators, StringSplitOptions.RemoveEmptyEntries))
         {
             var (amount, unit) = ExtractUnitAndAmount(segment);
-            InnerTimeSpan += ReadableTimeSpanUnitMapper.Map(unit).Invoke(amount);
-        }
-    }
-
-    public ReadableTimeSpan(TimeSpan timeSpan)
-    {
-        InnerTimeSpan = timeSpan;
-    }
-
-    public static ReadableTimeSpan Parse(string stringTimespan)
-    {
-        return new ReadableTimeSpan(stringTimespan);
-    }
-
-    public static bool TryParse(string stringTimespan, out ReadableTimeSpan readableTimeSpan)
-    {
-        try
-        {
-            readableTimeSpan = new ReadableTimeSpan(stringTimespan);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-    
-    public int CompareTo(object? obj)
-    {
-        if (obj is not ReadableTimeSpan readableTimeSpan)
-        {
-            return -1;
+            timeSpan += ReadableTimeSpanUnitMapper.Map(unit).Invoke(amount);
         }
 
-        return InnerTimeSpan.CompareTo(readableTimeSpan.InnerTimeSpan);
+        return timeSpan;
     }
 
-    public int CompareTo(ReadableTimeSpan other)
-    {
-        return InnerTimeSpan.CompareTo(other.InnerTimeSpan);
-    }
-
-    public bool Equals(ReadableTimeSpan other)
-    {
-        return InnerTimeSpan.Equals(other.InnerTimeSpan);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is ReadableTimeSpan span && Equals(span);
-    }
-
-    public override int GetHashCode()
-    {
-        return InnerTimeSpan.GetHashCode();
-    }
-
-    public override string ToString()
+    public static string ToReadableString(this TimeSpan timeSpan)
     {
         var stringBuilder = new StringBuilder();
 
-        if (InnerTimeSpan.Days > 1)
+        if (timeSpan.Days > 1)
         {
-            stringBuilder.Append($"{InnerTimeSpan.Days} Days, ");
+            stringBuilder.Append($"{timeSpan.Days} Days, ");
         }
-        else if (InnerTimeSpan.Days > 0)
+        else if (timeSpan.Days > 0)
         {
             stringBuilder.Append("1 Day, ");
         }
         
-        if (InnerTimeSpan.Hours > 1)
+        if (timeSpan.Hours > 1)
         {
-            stringBuilder.Append($"{InnerTimeSpan.Hours} Hours, ");
+            stringBuilder.Append($"{timeSpan.Hours} Hours, ");
         }
-        else if (InnerTimeSpan.Hours > 0)
+        else if (timeSpan.Hours > 0)
         {
             stringBuilder.Append("1 Hour, ");
         }
         
-        if (InnerTimeSpan.Minutes > 1)
+        if (timeSpan.Minutes > 1)
         {
-            stringBuilder.Append($"{InnerTimeSpan.Minutes} Minutes, ");
+            stringBuilder.Append($"{timeSpan.Minutes} Minutes, ");
         }
-        else if (InnerTimeSpan.Minutes > 0)
+        else if (timeSpan.Minutes > 0)
         {
             stringBuilder.Append("1 Minute, ");
         }
         
-        if (InnerTimeSpan.Seconds > 1)
+        if (timeSpan.Seconds > 1)
         {
-            stringBuilder.Append($"{InnerTimeSpan.Seconds} Seconds, ");
+            stringBuilder.Append($"{timeSpan.Seconds} Seconds, ");
         }
-        else if (InnerTimeSpan.Seconds > 0)
+        else if (timeSpan.Seconds > 0)
         {
             stringBuilder.Append("1 Second, ");
         }
         
-        if (InnerTimeSpan.Milliseconds > 1)
+        if (timeSpan.Milliseconds > 1)
         {
-            stringBuilder.Append($"{InnerTimeSpan.Milliseconds} Milliseconds, ");
+            stringBuilder.Append($"{timeSpan.Milliseconds} Milliseconds, ");
         }
-        else if (InnerTimeSpan.Milliseconds > 0)
+        else if (timeSpan.Milliseconds > 0)
         {
             stringBuilder.Append("1 Millisecond");
         }
@@ -152,79 +125,6 @@ public readonly struct ReadableTimeSpan : IComparable, IComparable<ReadableTimeS
             .TrimEnd(", ")
             .ReplaceLastOccurrence(", ", " and ");
     }
-
-    public static bool operator ==(ReadableTimeSpan left, ReadableTimeSpan right)
-    {
-        return left.Equals(right);
-    }
-
-    public static bool operator !=(ReadableTimeSpan left, ReadableTimeSpan right)
-    {
-        return !(left == right);
-    }
-
-    public static bool operator <(ReadableTimeSpan left, ReadableTimeSpan right)
-    {
-        return left.InnerTimeSpan < right.InnerTimeSpan;
-    }
-
-    public static bool operator >(ReadableTimeSpan left, ReadableTimeSpan right)
-    {
-        return left.InnerTimeSpan > right.InnerTimeSpan;
-    }
-    
-    public static bool operator ==(TimeSpan left, ReadableTimeSpan right)
-    {
-        return left.Equals(right.InnerTimeSpan);
-    }
-
-    public static bool operator !=(TimeSpan left, ReadableTimeSpan right)
-    {
-        return !(left == right.InnerTimeSpan);
-    }
-
-    public static bool operator <(TimeSpan left, ReadableTimeSpan right)
-    {
-        return left < right.InnerTimeSpan;
-    }
-
-    public static bool operator >(TimeSpan left, ReadableTimeSpan right)
-    {
-        return left > right.InnerTimeSpan;
-    }
-    
-    public static bool operator ==(ReadableTimeSpan left, TimeSpan right)
-    {
-        return left.InnerTimeSpan.Equals(right);
-    }
-
-    public static bool operator !=(ReadableTimeSpan left, TimeSpan right)
-    {
-        return !(left.InnerTimeSpan == right);
-    }
-
-    public static bool operator <(ReadableTimeSpan left, TimeSpan right)
-    {
-        return left.InnerTimeSpan < right;
-    }
-
-    public static bool operator >(ReadableTimeSpan left, TimeSpan right)
-    {
-        return left.InnerTimeSpan > right;
-    }
-
-    public int Days => InnerTimeSpan.Days;
-    public int Hours => InnerTimeSpan.Hours;
-    public int Minutes => InnerTimeSpan.Minutes;
-    public int Seconds => InnerTimeSpan.Seconds;
-    public int Milliseconds => InnerTimeSpan.Milliseconds;
-    public long Ticks => InnerTimeSpan.Ticks;
-
-    public double TotalDays => InnerTimeSpan.TotalDays;
-    public double TotalHours => InnerTimeSpan.TotalHours;
-    public double TotalMinutes => InnerTimeSpan.TotalMinutes;
-    public double TotalSeconds => InnerTimeSpan.TotalSeconds;
-    public double TotalMilliseconds => InnerTimeSpan.TotalMilliseconds;
 
     private static (double amount, ReadableTimeSpanUnit unit) ExtractUnitAndAmount(string stringTimespan)
     {

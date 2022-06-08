@@ -11,13 +11,13 @@ public class Tests
     [TestCase("and")]
     public void SeparatorsAreValid(string separator)
     {
-        var timeSpan = new ReadableTimeSpan($"5 days {separator} 4 hours {separator} 3 minutes {separator} 2 seconds {separator} 1 millisecond");
+        var timeSpan = ReadableTimeSpan.Parse($"5 days {separator} 4 hours {separator} 3 minutes {separator} 2 seconds {separator} 1 millisecond");
 
-        Assert.That(timeSpan.InnerTimeSpan.Days, Is.EqualTo(5));
-        Assert.That(timeSpan.InnerTimeSpan.Hours, Is.EqualTo(4));
-        Assert.That(timeSpan.InnerTimeSpan.Minutes, Is.EqualTo(3));
-        Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(2));
-        Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(1));
+        Assert.That(timeSpan.Days, Is.EqualTo(5));
+        Assert.That(timeSpan.Hours, Is.EqualTo(4));
+        Assert.That(timeSpan.Minutes, Is.EqualTo(3));
+        Assert.That(timeSpan.Seconds, Is.EqualTo(2));
+        Assert.That(timeSpan.Milliseconds, Is.EqualTo(1));
     }
 
     [TestCase("d")]
@@ -30,9 +30,9 @@ public class Tests
     [TestCase("DAYS")]
     public void CanParseDifferentWordsFor_Days(string word)
     {
-        var timeSpan = new ReadableTimeSpan($"5 {word} | 4 hours | 3 minutes | 2 seconds | 1 millisecond");
+        var timeSpan = ReadableTimeSpan.Parse($"5 {word} | 4 hours | 3 minutes | 2 seconds | 1 millisecond");
         
-        Assert.That(timeSpan.InnerTimeSpan.Days, Is.EqualTo(5));
+        Assert.That(timeSpan.Days, Is.EqualTo(5));
     }
 
     [TestCase("h")]
@@ -51,9 +51,9 @@ public class Tests
     [TestCase("HOURS")]
     public void CanParseDifferentWordsFor_Hours(string word)
     {
-        var timeSpan = new ReadableTimeSpan($"5 days | 4 {word} | 3 minutes | 2 seconds | 1 millisecond");
+        var timeSpan = ReadableTimeSpan.Parse($"5 days | 4 {word} | 3 minutes | 2 seconds | 1 millisecond");
         
-        Assert.That(timeSpan.InnerTimeSpan.Hours, Is.EqualTo(4));
+        Assert.That(timeSpan.Hours, Is.EqualTo(4));
     }
     
     [TestCase("m")]
@@ -72,9 +72,9 @@ public class Tests
     [TestCase("MINUTES")]
     public void CanParseDifferentWordsFor_Minutes(string word)
     {
-        var timeSpan = new ReadableTimeSpan($"5 days | 4 hours | 3 {word} | 2 seconds | 1 millisecond");
+        var timeSpan = ReadableTimeSpan.Parse($"5 days | 4 hours | 3 {word} | 2 seconds | 1 millisecond");
         
-        Assert.That(timeSpan.InnerTimeSpan.Minutes, Is.EqualTo(3));
+        Assert.That(timeSpan.Minutes, Is.EqualTo(3));
     }
     
     [TestCase("s")]
@@ -93,9 +93,9 @@ public class Tests
     [TestCase("SECONDS")]
     public void CanParseDifferentWordsFor_Seconds(string word)
     {
-        var timeSpan = new ReadableTimeSpan($"5 days | 4 hours | 3 minutes | 2 {word} | 1 millisecond");
+        var timeSpan = ReadableTimeSpan.Parse($"5 days | 4 hours | 3 minutes | 2 {word} | 1 millisecond");
         
-        Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(2));
+        Assert.That(timeSpan.Seconds, Is.EqualTo(2));
     }
     
     [TestCase("ms")]
@@ -121,9 +121,9 @@ public class Tests
     [TestCase("MILLISECONDS")]
     public void CanParseDifferentWordsFor_Milliseconds(string word)
     {
-        var timeSpan = new ReadableTimeSpan($"5 days | 4 hours | 3 minutes | 2 seconds | 324 {word}");
+        var timeSpan = ReadableTimeSpan.Parse($"5 days | 4 hours | 3 minutes | 2 seconds | 324 {word}");
         
-        Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(324));
+        Assert.That(timeSpan.Milliseconds, Is.EqualTo(324));
     }
     
     [TestCase("t")]
@@ -136,72 +136,72 @@ public class Tests
     [TestCase("TICKS")]
     public void CanParseDifferentWordsFor_Ticks(string word)
     {
-        var timeSpan = new ReadableTimeSpan($"736736 {word}");
+        var timeSpan = ReadableTimeSpan.Parse($"736736 {word}");
         
-        Assert.That(timeSpan.InnerTimeSpan.Ticks, Is.EqualTo(736736));
+        Assert.That(timeSpan.Ticks, Is.EqualTo(736736));
     }
 
     [Test]
     public void CanParseDecimals_Days()
     {
-        var timeSpan = new ReadableTimeSpan($"5.5 days");
+        var timeSpan = ReadableTimeSpan.Parse($"5.5 days");
         
-        Assert.That(timeSpan.InnerTimeSpan.Days, Is.EqualTo(5));
-        Assert.That(timeSpan.InnerTimeSpan.Hours, Is.EqualTo(12));
+        Assert.That(timeSpan.Days, Is.EqualTo(5));
+        Assert.That(timeSpan.Hours, Is.EqualTo(12));
     }
     
     [Test]
     public void CanParseDecimals_Hours()
     {
-        var timeSpan = new ReadableTimeSpan($"5.5 hours");
+        var timeSpan = ReadableTimeSpan.Parse($"5.5 hours");
         
-        Assert.That(timeSpan.InnerTimeSpan.Hours, Is.EqualTo(5));
-        Assert.That(timeSpan.InnerTimeSpan.Minutes, Is.EqualTo(30));
+        Assert.That(timeSpan.Hours, Is.EqualTo(5));
+        Assert.That(timeSpan.Minutes, Is.EqualTo(30));
     }
     
     [Test]
     public void CanParseDecimals_Minutes()
     {
-        var timeSpan = new ReadableTimeSpan($"5.5 mins");
+        var timeSpan = ReadableTimeSpan.Parse($"5.5 mins");
         
-        Assert.That(timeSpan.InnerTimeSpan.Minutes, Is.EqualTo(5));
-        Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(30));
+        Assert.That(timeSpan.Minutes, Is.EqualTo(5));
+        Assert.That(timeSpan.Seconds, Is.EqualTo(30));
     }
     
     [Test]
     public void CanParseDecimals_Seconds()
     {
-        var timeSpan = new ReadableTimeSpan($"5.5 secs");
+        var timeSpan = ReadableTimeSpan.Parse($"5.5 secs");
         
-        Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(5));
-        Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(500));
+        Assert.That(timeSpan.Seconds, Is.EqualTo(5));
+        Assert.That(timeSpan.Milliseconds, Is.EqualTo(500));
     }
     
     [Test]
     public void CanParseSurroundingSpaces()
     {
-        var timeSpan = new ReadableTimeSpan("   5  days   and 4hr |     3m  |   2s     and   324ms   ");
+        var timeSpan = ReadableTimeSpan.Parse("   5  days   and 4hr |     3m  |   2s     and   324ms   ");
         
-        Assert.That(timeSpan.InnerTimeSpan.Days, Is.EqualTo(5));
-        Assert.That(timeSpan.InnerTimeSpan.Hours, Is.EqualTo(4));
-        Assert.That(timeSpan.InnerTimeSpan.Minutes, Is.EqualTo(3));
-        Assert.That(timeSpan.InnerTimeSpan.Seconds, Is.EqualTo(2));
-        Assert.That(timeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(324));
+        Assert.That(timeSpan.Days, Is.EqualTo(5));
+        Assert.That(timeSpan.Hours, Is.EqualTo(4));
+        Assert.That(timeSpan.Minutes, Is.EqualTo(3));
+        Assert.That(timeSpan.Seconds, Is.EqualTo(2));
+        Assert.That(timeSpan.Milliseconds, Is.EqualTo(324));
     }
     
     [Test]
     public void CanParse_Zero()
     {
-        var timeSpan = new ReadableTimeSpan("0");
+        var timeSpan = ReadableTimeSpan.Parse("0");
 
-        Assert.That(timeSpan.InnerTimeSpan.TotalMilliseconds, Is.EqualTo(0));
+        Assert.That(timeSpan.TotalMilliseconds, Is.EqualTo(0));
     }
     
     [Test]
     public void CanParse_ZeroSeconds()
     {
-        var timeSpan = new ReadableTimeSpan("0 seconds");
+        var timeSpan = ReadableTimeSpan.Parse("0 seconds");
 
-        Assert.That(timeSpan.InnerTimeSpan.TotalMilliseconds, Is.EqualTo(0));
+        Assert.That(timeSpan.TotalMilliseconds, Is.EqualTo(0));
     }
 }

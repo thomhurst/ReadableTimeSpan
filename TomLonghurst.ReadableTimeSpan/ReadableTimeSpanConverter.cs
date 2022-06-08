@@ -14,7 +14,7 @@ public class ReadableTimeSpanConverter : TypeConverter
     {
         if (value is string stringValue)
         {
-            return new ReadableTimeSpan(stringValue);
+            return ReadableTimeSpan.Parse(stringValue);
         }
         
         return base.ConvertFrom(context, culture, value);

@@ -1,10 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace TomLonghurst.ReadableTimeSpan.UnitTests;
 
 public class OptionsTypeConversionTests
 {
+    [OneTimeSetUp]
+    public void Setup()
+    {
+        ReadableTimeSpan.EnableConfigurationBinding();
+    }
+    
     [Test]
     public void Configuration_Binding()
     {
@@ -15,13 +22,13 @@ public class OptionsTypeConversionTests
         var testOptions = new TestOptions();
         configuration.Bind("TestOptions", testOptions);
         
-        Assert.That(testOptions.OneDay.InnerTimeSpan.Days, Is.EqualTo(1));
+        Assert.That(testOptions.OneDay.Days, Is.EqualTo(1));
         
-        Assert.That(testOptions.ComplexTimeSpan.InnerTimeSpan.Days, Is.EqualTo(166));
-        Assert.That(testOptions.ComplexTimeSpan.InnerTimeSpan.Hours, Is.EqualTo(13));
-        Assert.That(testOptions.ComplexTimeSpan.InnerTimeSpan.Minutes, Is.EqualTo(42));
-        Assert.That(testOptions.ComplexTimeSpan.InnerTimeSpan.Seconds, Is.EqualTo(29));
-        Assert.That(testOptions.ComplexTimeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(324));
+        Assert.That(testOptions.ComplexTimeSpan.Days, Is.EqualTo(166));
+        Assert.That(testOptions.ComplexTimeSpan.Hours, Is.EqualTo(13));
+        Assert.That(testOptions.ComplexTimeSpan.Minutes, Is.EqualTo(42));
+        Assert.That(testOptions.ComplexTimeSpan.Seconds, Is.EqualTo(29));
+        Assert.That(testOptions.ComplexTimeSpan.Milliseconds, Is.EqualTo(324));
     }
     
     [Test]
@@ -31,12 +38,12 @@ public class OptionsTypeConversionTests
             .AddJsonFile("test_appsettings.json", optional: false)
             .Build();
 
-        var complexTimeSpan = configuration.GetValue<ReadableTimeSpan>("TestOptions:ComplexTimeSpan");
+        var complexTimeSpan = configuration.GetValue<TimeSpan>("TestOptions:ComplexTimeSpan");
 
-        Assert.That(complexTimeSpan.InnerTimeSpan.Days, Is.EqualTo(166));
-        Assert.That(complexTimeSpan.InnerTimeSpan.Hours, Is.EqualTo(13));
-        Assert.That(complexTimeSpan.InnerTimeSpan.Minutes, Is.EqualTo(42));
-        Assert.That(complexTimeSpan.InnerTimeSpan.Seconds, Is.EqualTo(29));
-        Assert.That(complexTimeSpan.InnerTimeSpan.Milliseconds, Is.EqualTo(324));
+        Assert.That(complexTimeSpan.Days, Is.EqualTo(166));
+        Assert.That(complexTimeSpan.Hours, Is.EqualTo(13));
+        Assert.That(complexTimeSpan.Minutes, Is.EqualTo(42));
+        Assert.That(complexTimeSpan.Seconds, Is.EqualTo(29));
+        Assert.That(complexTimeSpan.Milliseconds, Is.EqualTo(324));
     }
 }
