@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ReadableTimeSp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ReadableTimeSpan.Newtonsoft.Json.UnitTests", "TomLonghurst.ReadableTimeSpan.Newtonsoft.Json.UnitTests\TomLonghurst.ReadableTimeSpan.Newtonsoft.Json.UnitTests.csproj", "{023258B3-D4F4-4564-A48C-92D805CF5BC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ReadableTimeSpan.System.Text.Json", "TomLonghurst.ReadableTimeSpan.System.Text.Json\TomLonghurst.ReadableTimeSpan.System.Text.Json.csproj", "{ADF4C6C4-6465-4CAA-83AF-B99EAD2A4E9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ReadableTimeSpan.System.Text.Json.UnitTests", "TomLonghurst.ReadableTimeSpan.System.Text.Json.UnitTests\TomLonghurst.ReadableTimeSpan.System.Text.Json.UnitTests.csproj", "{309A1E48-D801-47CD-88D4-B50C4BC05E34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{023258B3-D4F4-4564-A48C-92D805CF5BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{023258B3-D4F4-4564-A48C-92D805CF5BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{023258B3-D4F4-4564-A48C-92D805CF5BC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF4C6C4-6465-4CAA-83AF-B99EAD2A4E9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF4C6C4-6465-4CAA-83AF-B99EAD2A4E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF4C6C4-6465-4CAA-83AF-B99EAD2A4E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF4C6C4-6465-4CAA-83AF-B99EAD2A4E9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{309A1E48-D801-47CD-88D4-B50C4BC05E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{309A1E48-D801-47CD-88D4-B50C4BC05E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{309A1E48-D801-47CD-88D4-B50C4BC05E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{309A1E48-D801-47CD-88D4-B50C4BC05E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

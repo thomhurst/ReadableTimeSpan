@@ -6,7 +6,9 @@ public class Tests
 {
     [TestCase("|")]
     [TestCase(":")]
-    [TestCase("/")]
+    [TestCase(",")]
+    [TestCase("&")]
+    [TestCase("+")]
     [TestCase("-")]
     [TestCase("and")]
     public void SeparatorsAreValid(string separator)

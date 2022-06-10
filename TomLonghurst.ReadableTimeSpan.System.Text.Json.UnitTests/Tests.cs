@@ -1,24 +1,28 @@
+using System;
 using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json;
 using NUnit.Framework;
 
-namespace TomLonghurst.ReadableTimeSpan.Newtonsoft.Json.UnitTests;
+namespace TomLonghurst.ReadableTimeSpan.System.Text.Json.UnitTests;
 
 public class Tests
 {
     [Test]
     public void Throws_Without_Custom_Converter()
     {
-        var exception = Assert.Throws<JsonSerializationException>(() =>
-            JsonConvert.DeserializeObject<TestOptions>(File.ReadAllText("test_appsettings.json")));
+        var exception = Assert.Throws<JsonException>(() =>
+            JsonSerializer.Deserialize<TestOptions>(File.ReadAllText("test_appsettings.json")));
         
-        Assert.That(exception.Message, Is.EqualTo("Error converting value \"1 day\" to type 'System.TimeSpan'. Path 'OneDay', line 2, position 21."));
+        Assert.That(exception.Message, Is.EqualTo("The JSON value could not be converted to System.TimeSpan. Path: $.OneDay | LineNumber: 1 | BytePositionInLine: 21."));
     }
     
     [Test]
     public void Does_Not_Throw_With_Custom_Converter()
     {
-        var testOptions = JsonConvert.DeserializeObject<TestOptions>(File.ReadAllText("test_appsettings.json"), new ReadableTimeSpanJsonConverter());
+        var testOptions = JsonSerializer.Deserialize<TestOptions>(File.ReadAllText("test_appsettings.json"), new JsonSerializerOptions
+        {
+            Converters = { new ReadableTimeSpanJsonConverter() }
+        });
 
         Assert.That(testOptions.OneDay.Days, Is.EqualTo(1));
         

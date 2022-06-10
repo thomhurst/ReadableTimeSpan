@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TomLonghurst.ReadableTimeSpan.Newtonsoft.Json.UnitTests;
+namespace TomLonghurst.ReadableTimeSpan.System.Text.Json.UnitTests;
 
 public class TestOptions
 {
