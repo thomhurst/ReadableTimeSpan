@@ -27,24 +27,6 @@ public static class ReadableTimeSpan
 
     public static TimeSpan Parse(string stringTimespan)
     {
-        return InternalParse(stringTimespan);
-    }
-
-    public static bool TryParse(string stringTimespan, out TimeSpan readableTimeSpan)
-    {
-        try
-        {
-            readableTimeSpan = InternalParse(stringTimespan);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    private static TimeSpan InternalParse(string stringTimespan)
-    {
         if (string.IsNullOrWhiteSpace(stringTimespan))
         {
             throw new ArgumentNullException(nameof(stringTimespan));
@@ -69,6 +51,19 @@ public static class ReadableTimeSpan
         }
 
         return timeSpan;
+    }
+
+    public static bool TryParse(string stringTimespan, out TimeSpan readableTimeSpan)
+    {
+        try
+        {
+            readableTimeSpan = Parse(stringTimespan);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public static string ToReadableString(this TimeSpan timeSpan)

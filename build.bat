@@ -6,4 +6,6 @@ dotnet pack ".\TomLonghurst.ReadableTimeSpan\TomLonghurst.ReadableTimeSpan.cspro
 
 dotnet pack ".\TomLonghurst.ReadableTimeSpan.Newtonsoft.Json\TomLonghurst.ReadableTimeSpan.Newtonsoft.Json.csproj"  --configuration Release /p:Version=%version%
 
+dotnet pack ".\TomLonghurst.ReadableTimeSpan.System.Text.Json\TomLonghurst.ReadableTimeSpan.System.Text.Json.csproj"  --configuration Release /p:Version=%version%
+
 pause
