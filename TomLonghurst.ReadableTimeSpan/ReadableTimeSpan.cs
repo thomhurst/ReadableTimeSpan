@@ -6,6 +6,10 @@ using TomLonghurst.ReadableTimeSpan.Enums;
 using TomLonghurst.ReadableTimeSpan.Extensions;
 using TomLonghurst.ReadableTimeSpan.Mappers;
 
+#if NET6_0_OR_GREATER
+using System.Runtime.CompilerServices;
+#endif
+
 namespace TomLonghurst.ReadableTimeSpan;
 
 public static class ReadableTimeSpan
@@ -14,6 +18,9 @@ public static class ReadableTimeSpan
     private static readonly Regex AlphaAndNumberRegex = new(@"(\d+\.?\d*)\s*([a-zA-Z]+)");
     private static bool _configurationBindingIsEnabled;
 
+#if NET6_0_OR_GREATER
+    [ModuleInitializer]
+#endif
     public static void EnableConfigurationBinding()
     {
         if (_configurationBindingIsEnabled)
@@ -62,6 +69,7 @@ public static class ReadableTimeSpan
         }
         catch
         {
+            readableTimeSpan = default;
             return false;
         }
     }
